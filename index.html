@@ -56,11 +56,10 @@ cursor:pointer;
 margin:10px;
 transition:0.2s;
 }
-
 button:active{transform:scale(0.95);}
 #noBtn{background:#eee;}
 
-/* ---------- หน้า 2 เค้ก ---------- */
+/* ---------- หน้า 2 ---------- */
 #cakePage{
 display:none;
 height:100vh;
@@ -99,29 +98,51 @@ min-height:100vh;
 
 .cat{font-size:36px;margin:10px 0;}
 
-/* ---------- Gallery ---------- */
+/* รูปปกติ */
 .gallery{
 display:flex;
 flex-wrap:wrap;
 justify-content:center;
 gap:14px;
-margin-top:20px;
+margin:15px 0 25px;
 }
-
 .gallery img{
-width:120px;
-height:120px;
+width:130px;
+height:130px;
 object-fit:cover;
 border-radius:18px;
 box-shadow:0 4px 12px rgba(0,0,0,0.3);
-border:2px solid #fff4;
+cursor:pointer;
 transition:0.25s;
 }
+.gallery img:hover{transform:scale(1.07);}
 
-.gallery img:hover{
-transform:scale(1.08);
-box-shadow:0 6px 18px rgba(255,100,150,0.5);
-border:2px solid #ff9acb;
+/* ---------- Popup ---------- */
+#popup{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.7);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:999;
+}
+#popup img{
+max-width:90%;
+max-height:85%;
+border-radius:18px;
+box-shadow:0 0 20px #000;
+}
+#popup span{
+position:absolute;
+top:20px;
+right:30px;
+font-size:28px;
+color:white;
+cursor:pointer;
 }
 
 /* ---------- พลุ ---------- */
@@ -160,26 +181,38 @@ animation:boom 1s ease-out forwards;
 <div id="wishPage">
   <h1>สุขสันต์วันเกิดเจ้าแคร์ 🎂</h1>
 
-  <p>
-  ขอให้ปีนี้เป็นปีที่มีความสุขที่สุด  
-  สมหวังทุกเรื่อง ยิ้มเยอะๆ สุขภาพแข็งแรง  
-  และขอให้มีรอยยิ้มแบบนี้ไปตลอดเลยนะ 💖
-  </p>
+  <p><b>มีความสุขมากๆนะไออ้วน 💖</b></p>
 
-  <div class="cat">🐱 🐱 🐱 🐱 🐱</div>
-
+  <!-- รูปแรก 2 รูป -->
   <div class="gallery">
     <img src="8122.jpeg">
     <img src="8123.jpeg">
-    <img src="11046.jpeg">
-    <img src="11070.jpeg">
-    <img src="11997.jpeg">
   </div>
+
+  <p>
+  โตขึ้นทุกปีทำอะไรก็คิดหน้าคิดหลัง  
+  มีเงินมีทองเลี้ยงบีชด้วย 💸💖
+  </p>
+
+  <!-- รูป popup -->
+  <div class="gallery">
+    <img src="11046.jpeg" onclick="openPopup(this.src)">
+    <img src="11070.jpeg" onclick="openPopup(this.src)">
+    <img src="11997.jpeg" onclick="openPopup(this.src)">
+  </div>
+
+  <div class="cat">🐱 🐱 🐱 🐱 🐱</div>
+</div>
+
+<!-- Popup -->
+<div id="popup" onclick="closePopup()">
+  <span>✕</span>
+  <img id="popupImg">
 </div>
 
 <script>
 
-/* ---------- หัวใจลอย ---------- */
+/* หัวใจ */
 function createHeart(){
 const h=document.createElement("div");
 h.className="heart";
@@ -191,27 +224,34 @@ setTimeout(()=>h.remove(),8000);
 }
 setInterval(createHeart,400);
 
-/* ---------- ปุ่มไม่คิดถึง ---------- */
+/* ปุ่ม */
 let size=16;
 function growYes(){
 size+=6;
 document.getElementById("yesBtn").style.fontSize=size+"px";
 }
 
-/* ---------- ไปหน้าเค้ก ---------- */
+/* เปลี่ยนหน้า */
 function goCake(){
 document.getElementById("questionPage").style.display="none";
 document.getElementById("cakePage").style.display="flex";
 }
-
-/* ---------- เป่าเทียน ---------- */
 function blowCandle(){
 document.getElementById("cakePage").style.display="none";
 document.getElementById("wishPage").style.display="block";
 launchFireworks();
 }
 
-/* ---------- พลุ ---------- */
+/* Popup */
+function openPopup(src){
+document.getElementById("popup").style.display="flex";
+document.getElementById("popupImg").src=src;
+}
+function closePopup(){
+document.getElementById("popup").style.display="none";
+}
+
+/* พลุ */
 function launchFireworks(){
 for(let i=0;i<20;i++){
 setTimeout(()=>{
@@ -225,7 +265,6 @@ setTimeout(()=>f.remove(),1000);
 },i*120);
 }
 }
-
 </script>
 
 </body>
