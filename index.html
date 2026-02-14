@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂</title>
+
+<style>
+body{
+  font-family: "Prompt", sans-serif;
+  text-align:center;
+  margin:0;
+  background:#ffe6f1;
+  overflow-x:hidden;
+}
+
+/* ===== พื้นหลังหัวใจ ===== */
+body::before{
+  content:"💖 💗 💕 💓 💞 💘 💝 💖 💗 💕";
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  font-size:60px;
+  opacity:0.15;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  pointer-events:none;
+}
+
+/* ===== หน้า ===== */
+.page{display:none;padding:40px;}
+.active{display:block;}
+
+/* ===== หน้าเค้ก ===== */
+.darkPage{
+  background:#000;
+  color:white;
+  height:100vh;
+}
+.darkPage::before{display:none;}
+
+.cake{font-size:120px;margin-top:120px;}
+.candle{font-size:60px;transition:0.5s;}
+
+.fadeBlack{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:black;
+  opacity:0;
+  pointer-events:none;
+  transition:1.5s;
+}
+
+/* ===== ปุ่ม ===== */
+.btn{
+  padding:14px 30px;
+  border:none;
+  border-radius:14px;
+  font-size:18px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.25s;
+  position:relative;
+  overflow:hidden;
+}
+.miss{background:#ff6fa5;color:white;}
+.nomiss{background:#ddd;}
+
+/* เอฟเฟคประกาย */
+.spark{
+  position:absolute;
+  width:6px;height:6px;
+  background:white;
+  border-radius:50%;
+  opacity:0.9;
+  animation:spark 0.6s linear forwards;
+}
+@keyframes spark{
+  to{transform:translate(var(--x),var(--y));opacity:0;}
+}
+
+/* ===== กล่องคำถาม ===== */
+.questionBox{
+  background:white;
+  padding:35px;
+  border-radius:20px;
+  width:340px;
+  margin:auto;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* ===== แกลเลอรี่ ===== */
+.gallery{
+  display:flex;
+  justify-content:center;
+  flex-wrap:wrap;
+  gap:18px;
+  margin-top:25px;
+}
+.gallery img{
+  width:170px;height:170px;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.18);
+  cursor:pointer;
+  transition:0.3s;
+}
+.gallery img:hover{transform:scale(1.06);}
+
+/* ===== popup ===== */
+.popup{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+}
+.popup img{
+  max-width:80%;
+  max-height:80%;
+  border-radius:16px;
+}
+
+/* ===== slider ===== */
+.slider{
+  position:relative;
+  width:90%;
+  max-width:700px;
+  margin:30px auto;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+.slideTrack{
+  display:flex;
+  transition:transform 0.6s ease;
+}
+.slideTrack img{
+  width:100%;
+  height:420px;
+  object-fit:cover;
+}
+
+/* ===== secret ===== */
+.secret{
+  display:none;
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  margin-top:15px;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* ===== ปุ่มย้อนกลับ ===== */
+.backBtn{
+  display:none;
+  position:fixed;
+  bottom:20px;
+  left:20px;
+  background:#fff;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  cursor:pointer;
+  box-shadow:0 6px 15px rgba(0,0,0,0.2);
+}
+</style>
+</head>
+
+<body>
+
+<div class="fadeBlack" id="fade"></div>
+
+<!-- หน้า 1 -->
+<div class="page active" id="page1">
+  <div class="questionBox">
+    <h2>คิดถึงเค้ามั้ย 💖</h2>
+    <button class="btn miss" id="yesBtn" onclick="spark(this);yesClick()">คิดถึง</button>
+    <button class="btn nomiss" id="noBtn" onclick="spark(this);noClick()">ไม่คิดถึง</button>
+  </div>
+</div>
+
+<!-- หน้าเค้ก -->
+<div class="page darkPage" id="pageCake">
+  <div class="cake">🎂</div>
+  <div class="candle" id="candle">🕯️🕯️🕯️</div>
+  <br>
+  <button class="btn miss" onclick="spark(this);blowCandle()">เป่าเทียน 🎉</button>
+</div>
+
+<!-- หน้า 2 -->
+<div class="page" id="page2">
+  <h1>เซอร์ไพรส์ 🎁</h1>
+  <button class="btn miss" onclick="spark(this);toggleSecret()">กดดูความลับ</button>
+  <div class="secret" id="secretBox">
+    ชีวิตเราอาจไม่สมบูรณ์แบบ แต่พอมีเธอ ทุกอย่างลงตัว 💖
+  </div>
+  <br><br>
+  <button class="btn miss" onclick="spark(this);goPage(3)">ไปหน้าคำอวยพร</button>
+</div>
+
+<!-- หน้า 3 -->
+<div class="page" id="page3">
+<h1>สุขสันต์วันเกิด 🎂</h1>
+<p>มีความสุขมากๆนะ 💖</p>
+
+<div class="gallery">
+  <img src="8122.jpeg" onclick="openPop(this)">
+  <img src="8123.jpeg" onclick="openPop(this)">
+</div>
+
+<p style="margin-top:30px;">
+โตขึ้นทุกปีคิดหน้าคิดหลัง มีเงินมีทอง 💖
+</p>
+
+<div class="gallery">
+  <img src="11046.jpeg" onclick="openPop(this)">
+  <img src="11070.jpeg" onclick="openPop(this)">
+</div>
+
+<div class="slider">
+  <div class="slideTrack" id="track">
+    <img src="8122.jpeg">
+    <img src="8123.jpeg">
+    <img src="11046.jpeg">
+    <img src="11070.jpeg">
+  </div>
+</div>
+</div>
+
+<div class="popup" id="popup" onclick="closePop()">
+  <img id="popImg">
+</div>
+
+<button class="backBtn" id="backBtn" onclick="goPage(2)">← กลับ</button>
+
+<script>
+function spark(btn){
+  for(let i=0;i<8;i++){
+    let s=document.createElement("div");
+    s.className="spark";
+    s.style.left="50%";
+    s.style.top="50%";
+    s.style.setProperty("--x",(Math.random()*80-40)+"px");
+    s.style.setProperty("--y",(Math.random()*80-40)+"px");
+    btn.appendChild(s);
+    setTimeout(()=>s.remove(),600);
+  }
+}
+
+function goPage(p){
+  document.querySelectorAll(".page").forEach(e=>e.classList.remove("active"));
+  document.getElementById("page"+p).classList.add("active");
+  document.getElementById("backBtn").style.display=(p===3)?"block":"none";
+}
+
+function toggleSecret(){
+  let s=document.getElementById("secretBox");
+  s.style.display = s.style.display=="block"?"none":"block";
+}
+
+function openPop(img){
+  popup.style.display="flex";
+  popImg.src=img.src;
+}
+function closePop(){popup.style.display="none";}
+
+let index=0;
+setInterval(()=>{
+  let track=document.getElementById("track");
+  index=(index+1)%4;
+  track.style.transform="translateX(-"+(index*100)+"%)";
+},3000);
+
+let noCount=0;
+function yesClick(){goPage("Cake");}
+function noClick(){
+  noCount++;
+  let yes=yesBtn,no=noBtn;
+  yes.style.transform="scale("+(1+noCount*0.15)+")";
+  no.style.transform="scale("+(1-noCount*0.12)+")";
+  if(noCount>=5) no.style.display="none";
+}
+
+function blowCandle(){
+  candle.innerHTML="💨";
+  fade.style.opacity="1";
+  setTimeout(()=>{fade.style.opacity="0";goPage(2);},1800);
+}
+</script>
+
+</body>
+</html>
