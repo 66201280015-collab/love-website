@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎂</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  background:linear-gradient(#ffd6e7,#ffc0d9);
+  text-align:center;
+  margin:0;
+}
+
+/* หัวข้อ */
+h1{
+  margin-top:40px;
+  font-size:38px;
+}
+
+/* การ์ดรูป */
+.gallery{
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  margin-top:20px;
+}
+
+.gallery img{
+  width:220px;
+  height:220px;
+  object-fit:cover;
+  border-radius:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+  transition:0.3s;
+  cursor:pointer;
+}
+
+.gallery img:hover{
+  transform:scale(1.05);
+}
+
+/* สไลด์ */
+.slider{
+  width:70%;
+  margin:40px auto;
+  overflow:hidden;
+  border-radius:20px;
+  box-shadow:0 10px 25px rgba(0,0,0,0.2);
+}
+
+.slides{
+  display:flex;
+  width:500%;
+  animation:slide 15s infinite;
+}
+
+.slides img{
+  width:100%;
+  height:350px;
+  object-fit:cover;
+}
+
+@keyframes slide{
+  0%{margin-left:0;}
+  20%{margin-left:0;}
+  25%{margin-left:-100%;}
+  45%{margin-left:-100%;}
+  50%{margin-left:-200%;}
+  70%{margin-left:-200%;}
+  75%{margin-left:-300%;}
+  95%{margin-left:-300%;}
+  100%{margin-left:-400%;}
+}
+
+/* popup */
+.popup{
+  display:none;
+  position:fixed;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  justify-content:center;
+  align-items:center;
+}
+
+.popup img{
+  width:60%;
+  border-radius:20px;
+}
+
+.close{
+  position:absolute;
+  top:20px;
+  right:30px;
+  color:white;
+  font-size:35px;
+  cursor:pointer;
+}
+
+/* ปุ่มเซอร์ไพรส์ */
+button{
+  margin-top:30px;
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:12px;
+  background:#ff5fa2;
+  color:white;
+  cursor:pointer;
+}
+
+.secret{
+  display:none;
+  font-size:20px;
+  margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>สุขสันต์วันเกิดเจ้าแคร์ 🎂</h1>
+<p>มีความสุขมากๆนะไออ้วน 💖</p>
+
+<!-- รูป 2 รูปแรก -->
+<div class="gallery">
+  <img src="8122.jpeg" onclick="openPopup(this.src)">
+  <img src="8123.jpeg" onclick="openPopup(this.src)">
+</div>
+
+<p>โตขึ้นทุกปีทำอะไรก็คิดหน้าคิดหลัง มีเงินมีทองเลี้ยงบีชด้วย 💖</p>
+
+<!-- รูปที่เหลือ -->
+<div class="gallery">
+  <img src="11046.jpeg" onclick="openPopup(this.src)">
+  <img src="11070.jpeg" onclick="openPopup(this.src)">
+  <img src="11997.jpeg" onclick="openPopup(this.src)">
+</div>
+
+<!-- สไลด์อัตโนมัติ -->
+<div class="slider">
+  <div class="slides">
+    <img src="8122.jpeg">
+    <img src="8123.jpeg">
+    <img src="11046.jpeg">
+    <img src="11070.jpeg">
+    <img src="11997.jpeg">
+  </div>
+</div>
+
+<!-- ปุ่มเซอร์ไพรส์ -->
+<button onclick="showSecret()">กดดูเซอร์ไพรส์ 🎁</button>
+<div class="secret" id="secretMsg">
+  รักนะไออ้วน อยู่ด้วยกันไปนานๆเลย 💖
+</div>
+
+<!-- popup -->
+<div class="popup" id="popup">
+  <span class="close" onclick="closePopup()">×</span>
+  <img id="popupImg">
+</div>
+
+<script>
+function openPopup(src){
+  document.getElementById("popup").style.display="flex";
+  document.getElementById("popupImg").src=src;
+}
+
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+
+function showSecret(){
+  document.getElementById("secretMsg").style.display="block";
+}
+</script>
+
+</body>
+</html>
